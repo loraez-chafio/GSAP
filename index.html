@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loraez.web | Personal Space</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+
+        @theme {
+            --color-primary: #c6ff4d;
+            --color-secondary: #a78bfa;
+            --color-tertiary: #22d3ee;
+        }
+
+        @layer components {
+            .btn-primary {
+                @apply px-5 py-3 rounded-xl bg-primary text-black font-bold
+                hover:scale-105 hover:shadow-lg transition-all duration-300;
+            }
+
+            .btn-secondary {
+                @apply px-5 py-3 rounded-xl bg-secondary text-black font-bold
+                hover:scale-105 transition-all duration-300;
+            }
+
+            .btn-tertiary {
+                @apply px-5 py-3 rounded-xl border border-tertiary text-tertiary
+                hover:bg-tertiary hover:text-black transition-all duration-300;
+            }
+
+            .glass-card {
+                @apply border border-white/10 bg-white/[0.04]
+                backdrop-blur-xl rounded-2xl;
+            }
+
+            .section-label {
+                @apply text-primary text-xs font-bold tracking-[0.3em] uppercase;
+            }
+        }
+    </style>
+
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Courier New", monospace;
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(198,255,77,.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(198,255,77,.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .glow {
+            text-shadow: 0 0 30px rgba(198,255,77,.4);
+        }
+
+        .float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .pulse-dot {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .3; }
+        }
+
+        .light-mode {
+            background-color: #f3f4f6 !important;
+            color: #111827 !important;
+        }
+
+        .light-mode .glass-card {
+            background: rgba(255,255,255,.8);
+            border-color: #d1d5db;
+        }
+
+        .light-mode .text-white {
+            color: #111827;
+        }
+
+        .light-mode .text-gray-400 {
+            color: #4b5563;
+        }
+
+        .light-mode .text-gray-500 {
+            color: #4b5563;
+        }
+
+        .light-mode .bg-black {
+            background-color: #e5e7eb;
+        }
+
+        .light-mode .grid-bg {
+            background-image:
+                linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px);
+        }
+
+        #terminal-output {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body class="bg-[#08090d] text-white min-h-screen grid-bg selection:bg-primary selection:text-black">
+
+    <!-- NAVIGATION -->
+    <header class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+        <a href="#home" class="font-black text-xl tracking-tighter">
+           Loraez<span class="text-primary">.web</span>
+        </a>
+
+        <nav class="hidden md:flex gap-8 text-sm text-gray-400">
+            <a href="#home" class="hover:text-primary transition">HOME</a>
+            <a href="#terminal" class="hover:text-primary transition">TERMINAL</a>
+            <a href="#missions" class="hover:text-primary transition">MISSIONS</a>
+            <a href="#about" class="hover:text-primary transition">SYSTEM</a>
+        </nav>
+
+        <button id="theme-toggle" class="btn-tertiary !px-3 !py-2 text-sm">
+            ☼ MODE
+        </button>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section id="home" class="max-w-7xl mx-auto px-6 pt-16 pb-28">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                <div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <span class="w-2 h-2 rounded-full bg-primary pulse-dot"></span>
+                        <p class="section-label"> 1.0</p>
+                    </div>
+
+                    <p class="text-gray-400 mb-4">WELCOME!</p>
+
+                    <h1 class="text-5xl md:text-7xl xl:text-8xl font-black leading-tight tracking-tighter">
+                        ENTER MY
+                        <span class="text-primary glow">Personal</span>
+                        <span class="text-secondary">Space</span>
+                    </h1>
+
+                    <p class="text-gray-400 leading-7 mt-8 max-w-lg">
+                        Not your ordinary portfolio. This is my personal
+                        corner of the internet — a place for experiments,
+                        code, informations, other ways to interact, and things worth creating.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <a href="#missions" class="btn-primary">
+                            Explore Missions ↗
+                        </a>
+
+                        <a href="#terminal" class="btn-secondary">
+                            Open Terminal _
+                        </a>
+                    </div>
+
+                    <div class="flex gap-8 mt-12 text-sm">
+                        <div>
+                            <p class="text-primary font-bold text-xl">01</p>
+                            <p class="text-gray-500 mt-1">CREATOR</p>
+                        </div>
+                        <div>
+                            <p class="text-secondary font-bold text-xl">∞</p>
+                            <p class="text-gray-500 mt-1">IDEAS</p>
+                        </div>
+                        <div>
+                            <p class="text-tertiary font-bold text-xl">24/7</p>
+                            <p class="text-gray-500 mt-1">IN LEARNING MODE</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIGITAL ORB -->
+                <div class="relative flex items-center justify-center min-h-[350px]">
+                    <div class="absolute w-72 h-72 md:w-96 md:h-96 border border-primary/20 rounded-full"></div>
+                    <div class="absolute w-60 h-60 md:w-80 md:h-80 border border-secondary/30 rounded-full"></div>
+                    <div class="absolute w-48 h-48 md:w-64 md:h-64 border border-tertiary/30 rounded-full"></div>
+
+                    <div class="float relative w-48 h-48 md:w-60 md:h-60 rounded-full
+                        bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20
+                        border border-white/10 flex flex-col items-center justify-center
+                        shadow-[0_0_80px_rgba(167,139,250,0.12)]">
+
+                        <span class="text-6xl">⌘</span>
+                        <p class="text-primary font-bold mt-4 tracking-widest">RALPH.EXE</p>
+                        <p class="text-gray-400 text-xs mt-2">DIGITAL ENTITY</p>
+                    </div>
+
+                    <div class="absolute top-8 right-0 glass-card p-4 text-xs">
+                        <p class="text-tertiary">CPU // BRAIN</p>
+                        <p class="text-white mt-2">IDEAS LOADING...</p>
+                    </div>
+
+                    <div class="absolute bottom-8 left-0 glass-card p-4 text-xs">
+                        <p class="text-secondary">STATUS</p>
+                        <p class="text-primary mt-2">BUILDING SOMETHING</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TERMINAL -->
+        <section id="terminal" class="max-w-5xl mx-auto px-6 py-20">
+            <div class="mb-8">
+                <p class="section-label">01 // INTERACTIVE INTERFACE</p>
+                <h2 class="text-3xl md:text-4xl font-black mt-4">Talk to the terminal<span class="text-primary">.</span></h2>
+                <p class="text-gray-400 mt-3">Type a command. See what happens.</p>
+            </div>
+
+            <div class="glass-card overflow-hidden">
+                <div class="flex items-center justify-between bg-black/30 px-5 py-4 border-b border-white/10">
+                    <div class="flex gap-2">
+                        <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                    </div>
+                    <span class="text-gray-500 text-xs">ralph@universe:~</span>
+                </div>
+
+                <div class="p-6 md:p-8">
+                    <p class="text-primary text-sm">RALPH OS [Version 1.0.0]</p>
+                    <p class="text-gray-400 text-sm mt-2">Type <span class="text-secondary">help</span> to view available commands.</p>
+
+                    <div id="terminal-output" class="text-sm leading-7 mt-5 min-h-20 text-gray-300">System initialized successfully.
+Awaiting command...</div>
+
+                    <form id="terminal-form" class="flex items-center gap-3 mt-6 border-t border-white/10 pt-5">
+                        <span class="text-primary">&gt;_</span>
+                        <input id="terminal-input" type="text" autocomplete="off"
+                            placeholder="Type help..."
+                            class="bg-transparent outline-none flex-1 min-w-0 text-white placeholder:text-gray-600">
+                        <button class="btn-primary !px-4 !py-2" type="submit">RUN</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- MISSIONS -->
+        <section id="missions" class="max-w-7xl mx-auto px-6 py-20">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10">
+                <div>
+                    <p class="section-label">02 // CURRENT MISSIONS</p>
+                    <h2 class="text-3xl md:text-4xl font-black mt-4">
+                        Things I'm building<span class="text-secondary">.</span>
+                    </h2>
+                </div>
+                <p class="text-gray-400 text-sm max-w-sm leading-6">
+                    Every project is a new level. These are examples you
+                    can replace with your real work.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-5">
+                <article class="glass-card p-7 hover:-translate-y-2 transition duration-300 group">
+                    <div class="flex justify-between items-center mb-10">
+                        <span class="text-primary text-3xl">⌘</span>
+                        <span class="text-xs text-gray-500">MISSION_001</span>
+                    </div>
+                    <p class="text-primary text-xs font-bold tracking-widest">WEB DEVELOPMENT</p>
+                    <h3 class="text-xl font-bold mt-3">The Web Architect</h3>
+                    <p class="text-gray-400 text-sm leading-6 mt-4">
+                        Creating useful digital experiences with HTML,
+                        CSS, JavaScript, and Tailwind CSS.
+                    </p>
+                    <a href="#about" class="inline-block mt-7 text-primary text-sm group-hover:translate-x-2 transition">
+                        Inspect mission →
+                    </a>
+                </article>
+
+                <article class="glass-card p-7 hover:-translate-y-2 transition duration-300 group">
+                    <div class="flex justify-between items-center mb-10">
+                        <span class="text-secondary text-3xl">◈</span>
+                        <span class="text-xs text-gray-500">MISSION_002</span>
+                    </div>
+                    <p class="text-secondary text-xs font-bold tracking-widest">DATABASE SYSTEMS</p>
+                    <h3 class="text-xl font-bold mt-3">The Data Keeper</h3>
+                    <p class="text-gray-400 text-sm leading-6 mt-4">
+                        Designing organized systems, exploring databases,
+                        and turning complicated workflows into simpler ones.
+                    </p>
+                    <a href="#about" class="inline-block mt-7 text-secondary text-sm group-hover:translate-x-2 transition">
+                        Inspect mission →
+                    </a>
+                </article>
+
+                <article class="glass-card p-7 hover:-translate-y-2 transition duration-300 group">
+                    <div class="flex justify-between items-center mb-10">
+                        <span class="text-tertiary text-3xl">⌁</span>
+                        <span class="text-xs text-gray-500">MISSION_003</span>
+                    </div>
+                    <p class="text-tertiary text-xs font-bold tracking-widest">EXPERIMENTAL LAB</p>
+                    <h3 class="text-xl font-bold mt-3">The Idea Hacker</h3>
+                    <p class="text-gray-400 text-sm leading-6 mt-4">
+                        Testing new ideas, learning unfamiliar tools,
+                        and experimenting until something works.
+                    </p>
+                    <a href="#about" class="inline-block mt-7 text-tertiary text-sm group-hover:translate-x-2 transition">
+                        Inspect mission →
+                    </a>
+                </article>
+            </div>
+        </section>
+
+        <!-- ABOUT / SYSTEM -->
+        <section id="about" class="max-w-7xl mx-auto px-6 py-20">
+            <div class="glass-card p-8 md:p-12 grid md:grid-cols-2 gap-10">
+                <div>
+                    <p class="section-label">03 // SYSTEM PROFILE</p>
+                    <h2 class="text-3xl md:text-5xl font-black mt-5 leading-tight">
+                        More than a
+                        <span class="text-primary">username.</span>
+                    </h2>
+                    <p class="text-gray-400 leading-7 mt-6">
+                        I'm Ralph, a student exploring the world of technology
+                        and development. I enjoy learning how digital systems
+                        work and building projects that turn ideas into reality.
+                    </p>
+                    <p class="text-gray-400 leading-7 mt-4">
+                        This website is my digital playground. It's a work in
+                        progress, just like every skill I'm developing.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-3">
+                            <span>HTML / CSS</span>
+                            <span class="text-primary">LEARNING</span>
+                        </div>
+                        <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+                            <div class="h-full w-[75%] bg-primary rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm mb-3">
+                            <span>JAVASCRIPT</span>
+                            <span class="text-secondary">LEARNING</span>
+                        </div>
+                        <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+                            <div class="h-full w-[50%] bg-secondary rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm mb-3">
+                            <span>DATABASE / BACKEND</span>
+                            <span class="text-tertiary">LEARNING</span>
+                        </div>
+                        <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+                            <div class="h-full w-[40%] bg-tertiary rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-500 text-xs leading-5">
+                        Note: These progress bars are visual placeholders.
+                        Adjust them to reflect your actual skills.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="max-w-4xl mx-auto px-6 py-24 text-center">
+            <p class="section-label">04 // ESTABLISH CONNECTION</p>
+            <h2 class="text-4xl md:text-6xl font-black mt-5">
+                GOT AN IDEA<span class="text-primary">?</span>
+            </h2>
+            <p class="text-gray-400 mt-5 leading-7">
+                Have a project, an interesting concept, or just want to talk code?
+                Let's make something worth remembering.
+            </p>
+
+            <a href="mailto:your-email@example.com" class="btn-primary inline-block mt-8">
+                Send a Transmission ↗
+            </a>
+            <p class="text-gray-500 text-xs mt-4">Replace the email address with yours.</p>
+        </section>
+    </main>
+
+    <footer class="border-t border-white/10 px-6 py-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 justify-between text-xs text-gray-500">
+            <p>© <span id="year"></span> Loraez.web // ALL INFORMATION IS EITHER TRUE OR CAP</p>
+            <p>DESIGNED IN THE DIGITAL VOID <span class="text-primary">●</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // AUTOMATIC CURRENT YEAR
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // DARK / LIGHT MODE
+        const themeToggle = document.getElementById("theme-toggle");
+
+        themeToggle.addEventListener("click", () => {
+            document.documentElement.classList.toggle("dark");
+            document.body.classList.toggle("light-mode");
+
+            themeToggle.textContent =
+                document.body.classList.contains("light-mode")
+                    ? "☾ DARK"
+                    : "☼ MODE";
+        });
+
+        // INTERACTIVE TERMINAL
+        const terminalForm = document.getElementById("terminal-form");
+        const terminalInput = document.getElementById("terminal-input");
+        const terminalOutput = document.getElementById("terminal-output");
+
+        
+const commands = {
+    help: `AVAILABLE COMMANDS:
+help         - Show all commands
+whoami       - Display identity
+skills       - View learning areas
+missions     - View current projects
+achievements - View achievement categories
+
+clear        - Clear terminal
+secret       - Discover a little surprise`,
+
+    whoami: `Hello, 'IM  Ralph Damiel Loraez, a 3rd year Information Systems in Colegio de Sta. Ana de Victorias. I am passionate about technology, coding, and continuous learning. I enjoy exploring new ideas, building projects, and improving my skills in web development and database systems.
+ROLE: Student / Aspiring Developer
+STATUS: Learning, building, improving.`,
+
+    skills: `
+> HTML & CSS
+> JavaScript
+> Tailwind CSS
+> Databases and backend development`,
+
+    missions: `ACTIVE MISSIONS:
+[01]  To Get a Diploma
+[02]  To be a better person
+[03]  To be a professional
+[04]  To have a beautiful wife and kids, and have a house with a porch that faces the river as the sun sets.
+
+Scroll to the MISSIONS section to explore.`,
+
+    achievements: `
+
+ACADEMICS
+ 
+ESPORTS
+   
+SPORTS
+   
+
+`,
+
+    academics: `===== ACADEMIC ACHIEVEMENTS =====
+
+> Academic awards: [2013-2014 Class Top 3, 2014-2015 Top 2, 2015-2016 Top 2, 2016-2017 Class Salutatorian, 2017-2018 With Honors, 2022-2023 With High Honors]
+> Academic competitions: [MTAP, Quiz Bee, Science Fair]
+
+
+
+`,
+
+    esports: `
+
+> Main game: [Mobile Legends: Bang Bang]
+> Team / Organization: [12 - HUMSS 3 Representative, SK Tournament Hda. La Consolacion Representative, DOCS Department Representative CWEEEK ML TOURNAMENT, DOCS FINEST]
+> Achievements: [2026 CWEEK ML TOURNAMENT - CHAMPION, 2025 BMIT ML TOURNAMENT - CHAMPION. 2024 BMIT ML TOURNAMENT - CHAMPION, 2023 CSS ML TOURNAMENT -  Top 4, BRGY XII Sk ML Tournament Top 3,]
+
+
+`,
+
+    sports: `===== SPORTS ACHIEVEMENTS =====
+
+> Sport: [Basketball, Badminton]
+> Team / Club: [Purok 1 - 2021 U18 LEAGUE, Purok 1 - 2022 U18 LEAGUE, Red Dragons - Inter Color Christmas League, The Common - 2024 Inter Purok Open League,  Hoopers - 2026 Opya Basketball League, 2026 Inter Purok Basketball League, 2015-2016 & 2016-2017 La Consolacion Badminton (Solo) Representative]
+> Achievements: [ 2024 Inter Purok Open League - CHAMPION, 2021 U18 LEAGUE - 2nd Place, 2022 U18 LEAGUE 2nd Place, 2022 Inter Color Christmas League - Champion,  2015-2016 & 2016-2017 La Consolacion Badminton (Solo) Representative - 2nd Place]
+`,
+
+    secret: `
+
+“One day, you’ll look back at the moments when you almost gave up and realize they were the moments that taught you how strong you really are. Let them doubt you. Let yourself feel lost sometimes. You don’t have to prove your worth to anyone, and you don’t have to have everything figured out today. Even if you’re moving slowly, even if nobody believes in you yet, keep going. You are still becoming the person you’ve always dreamed of being. Don’t let the voice that says you can’t become louder than the heart that still wants to try.”`,
+
+    clear: ""
+};
+
+
+        terminalForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const command = terminalInput.value.trim().toLowerCase();
+
+            if (!command) return;
+
+            if (command === "clear") {
+                terminalOutput.textContent = "";
+            } else if (commands[command]) {
+                terminalOutput.textContent = "> " + command + "\n\n" + commands[command];
+            } else {
+                terminalOutput.textContent =
+                    "> " + command +
+                    "\n\nCommand not found. Type 'help' to see available commands.";
+            }
+
+            terminalInput.value = "";
+        });
+    </script>
+
+</body>
+</html>
