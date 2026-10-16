@@ -1,527 +1,1194 @@
-
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loraez.web | Personal Space</title>
+    <title>Ralph Damiel Loraez | Portfolio</title>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <style type="text/tailwindcss">
-        @custom-variant dark (&:where(.dark, .dark *));
 
-        @theme {
-            --color-primary: #c6ff4d;
-            --color-secondary: #a78bfa;
-            --color-tertiary: #22d3ee;
-        }
-
-        @layer components {
-            .btn-primary {
-                @apply px-5 py-3 rounded-xl bg-primary text-black font-bold
-                hover:scale-105 hover:shadow-lg transition-all duration-300;
-            }
-
-            .btn-secondary {
-                @apply px-5 py-3 rounded-xl bg-secondary text-black font-bold
-                hover:scale-105 transition-all duration-300;
-            }
-
-            .btn-tertiary {
-                @apply px-5 py-3 rounded-xl border border-tertiary text-tertiary
-                hover:bg-tertiary hover:text-black transition-all duration-300;
-            }
-
-            .glass-card {
-                @apply border border-white/10 bg-white/[0.04]
-                backdrop-blur-xl rounded-2xl;
-            }
-
-            .section-label {
-                @apply text-primary text-xs font-bold tracking-[0.3em] uppercase;
-            }
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
 
     <style>
+        :root {
+            --coffee: #6F4E37;
+            --mocha: #967969;
+            --latte: #C8AD91;
+            --cream: #F5EFE6;
+            --beige: #E6D5C3;
+            --espresso: #2B211B;
+            --card-dark: #3A2C24;
+        }
+
         * {
+            box-sizing: border-box;
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: "Courier New", monospace;
+            position: relative;
+            isolation: isolate;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--cream);
+            color: var(--espresso);
+            overflow-x: hidden;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
-        .grid-bg {
+        body.dark {
+            background: var(--espresso);
+            color: var(--beige);
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        a {
+            color: inherit;
+        }
+
+
+
+        .tech-background {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            color: var(--coffee);
+            opacity: 0.17;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        body.dark .tech-background {
+            color: var(--latte);
+            opacity: 0.13;
+        }
+
+        .tech-background svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            inset: 0;
+        }
+
+        .tech-grid {
+            position: absolute;
+            inset: 0;
             background-image:
-                linear-gradient(rgba(198,255,77,.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(198,255,77,.04) 1px, transparent 1px);
-            background-size: 40px 40px;
+                linear-gradient(to right,
+                    currentColor 1px,
+                    transparent 1px),
+                linear-gradient(to bottom,
+                    currentColor 1px,
+                    transparent 1px);
+            background-size: 55px 55px;
+            opacity: 0.13;
+            mask-image: linear-gradient(to bottom,
+                    transparent,
+                    black 15%,
+                    black 80%,
+                    transparent);
         }
 
-        .glow {
-            text-shadow: 0 0 30px rgba(198,255,77,.4);
+        .tech-symbol {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid currentColor;
+            border-radius: 12px;
+            background: rgba(150, 121, 105, 0.04);
+            font-family: monospace;
+            font-weight: bold;
+            user-select: none;
         }
 
-        .float {
-            animation: float 4s ease-in-out infinite;
+        .tech-code {
+            top: 19%;
+            left: 4%;
+            width: 80px;
+            height: 55px;
+            font-size: 22px;
+            transform: rotate(-8deg);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+        .tech-chip {
+            top: 44%;
+            right: 5%;
+            width: 90px;
+            height: 90px;
+            font-size: 40px;
+            border-radius: 18px;
+            transform: rotate(8deg);
         }
 
-        .pulse-dot {
-            animation: pulse 1.5s infinite;
+        .tech-terminal {
+            bottom: 13%;
+            left: 5%;
+            width: 100px;
+            height: 65px;
+            font-size: 23px;
+            transform: rotate(5deg);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .3; }
+        .tech-circuit {
+            top: 13%;
+            right: 18%;
+            width: 55px;
+            height: 55px;
+            font-size: 28px;
+            border-radius: 50%;
         }
 
-        .light-mode {
-            background-color: #f3f4f6 !important;
-            color: #111827 !important;
+        .tech-laptop {
+            position: absolute;
+            top: 64%;
+            right: 13%;
+            width: 110px;
+            height: 85px;
         }
 
-        .light-mode .glass-card {
-            background: rgba(255,255,255,.8);
-            border-color: #d1d5db;
+        .tech-laptop svg,
+        .tech-chip-svg svg {
+            width: 100%;
+            height: 100%;
         }
 
-        .light-mode .text-white {
-            color: #111827;
+        .tech-chip-svg {
+            position: absolute;
+            top: 28%;
+            left: 17%;
+            width: 65px;
+            height: 65px;
         }
 
-        .light-mode .text-gray-400 {
-            color: #4b5563;
+        .tech-lines {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
         }
 
-        .light-mode .text-gray-500 {
-            color: #4b5563;
+        .tech-lines path,
+        .tech-lines circle {
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.4;
         }
 
-        .light-mode .bg-black {
-            background-color: #e5e7eb;
+        .tech-lines circle {
+            fill: currentColor;
         }
 
-        .light-mode .grid-bg {
-            background-image:
-                linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px);
+
+        header,
+        main,
+        footer {
+            position: relative;
+            z-index: 1;
         }
 
-        #terminal-output {
-            white-space: pre-wrap;
+        .container {
+            width: min(1050px, 92%);
+            margin: 0 auto;
+        }
+
+
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--beige);
+        }
+
+        body.dark header {
+            border-color: var(--mocha);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .accent {
+            color: var(--mocha);
+        }
+
+        body.dark .accent {
+            color: var(--latte);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 16px;
+            background: var(--coffee);
+            color: white;
+            text-decoration: none;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .button:hover {
+            background: var(--mocha);
+            transform: translateY(-2px);
+        }
+
+
+
+        #welcome-section {
+            padding: 100px 0 90px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            color: var(--mocha);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        body.dark .eyebrow {
+            color: var(--latte);
+        }
+
+        #welcome {
+            font-size: clamp(36px, 7vw, 64px);
+            line-height: 1.1;
+            margin: 20px 0;
+            font-weight: 800;
+        }
+
+        .username {
+            color: var(--mocha);
+            font-size: 20px;
+        }
+
+        body.dark .username {
+            color: var(--latte);
+        }
+
+        .description {
+            max-width: 650px;
+            margin: 20px auto 0;
+            line-height: 1.8;
+            color: var(--mocha);
+        }
+
+        body.dark .description {
+            color: var(--beige);
+        }
+
+        .hero-button {
+            margin-top: 28px;
+        }
+
+
+
+        section.content-section {
+            padding: 45px 0;
+        }
+
+        .section-heading {
+            font-size: clamp(28px, 4vw, 38px);
+            margin: 10px 0;
+        }
+
+        .section-description {
+            color: var(--mocha);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        body.dark .section-description {
+            color: var(--latte);
+        }
+
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            width: 100%;
+        }
+
+        .project-card {
+            min-width: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            color: var(--espresso);
+            border: 1px solid var(--beige);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(43, 33, 27, 0.08);
+            opacity: 1;
+            visibility: visible;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .project-card {
+            background: var(--card-dark);
+            color: var(--cream);
+            border-color: #594438;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 28px rgba(43, 33, 27, 0.18);
+        }
+
+        .project-preview {
+            min-height: 175px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--espresso);
+            color: var(--cream);
+            overflow: hidden;
+        }
+
+        .preview-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            color: var(--latte);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+        }
+
+        .preview-window {
+            border: 1px solid #594438;
+            border-radius: 8px;
+            background: #35271F;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .preview-window {
+            transform: scale(1.03);
+        }
+
+        .preview-line {
+            height: 7px;
+            background: var(--latte);
+            border-radius: 5px;
+            margin: 8px 0;
+        }
+
+        .preview-line.short {
+            width: 55%;
+            background: var(--mocha);
+        }
+
+        .preview-blocks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+            margin-top: 14px;
+        }
+
+        .preview-blocks span {
+            height: 28px;
+            border-radius: 5px;
+            background: var(--coffee);
+        }
+
+        .preview-blocks span:nth-child(2) {
+            background: var(--mocha);
+        }
+
+        .preview-blocks span:nth-child(3) {
+            background: var(--latte);
+        }
+
+
+
+        .profile-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 0;
+            min-height: 105px;
+        }
+
+        .profile-name {
+            font-size: clamp(17px, 2vw, 22px);
+            line-height: 1.3;
+            font-weight: 800;
+            color: var(--cream);
+            overflow-wrap: anywhere;
+        }
+
+        .profile-role {
+            margin: 8px 0 12px;
+            font-size: 13px;
+            color: var(--latte);
+        }
+
+        .hometown-preview {
+            min-height: 105px;
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(145deg, var(--mocha), var(--espresso));
+        }
+
+        .hometown-preview small {
+            color: var(--latte);
+            letter-spacing: 2px;
+        }
+
+        .hometown-preview strong {
+            font-size: 23px;
+            margin-top: 5px;
+        }
+
+        .project-info {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .project-category {
+            color: var(--mocha);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        body.dark .project-category {
+            color: var(--latte);
+        }
+
+        .project-info h3 {
+            font-size: 21px;
+            margin: 14px 0 8px;
+        }
+
+        .project-info p {
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 0;
+            color: #756052;
+        }
+
+        body.dark .project-info p {
+            color: var(--beige);
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .card-tags span {
+            padding: 6px 10px;
+            background: var(--beige);
+            color: var(--espresso);
+            border-radius: 20px;
+            font-size: 11px;
+        }
+
+
+        .study-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .study-card {
+            display: block;
+            min-width: 0;
+            padding: 26px;
+            background: var(--beige);
+            color: var(--espresso);
+            border: 1px solid #D8BEA6;
+            border-radius: 14px;
+            opacity: 1;
+            visibility: visible;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.dark .study-card {
+            background: var(--card-dark);
+            color: var(--cream);
+            border-color: #594438;
+        }
+
+        .study-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 24px rgba(43, 33, 27, 0.15);
+        }
+
+        .study-number {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--mocha);
+        }
+
+        body.dark .study-number {
+            color: var(--latte);
+        }
+
+        .study-card h3 {
+            font-size: 19px;
+            line-height: 1.4;
+            margin: 14px 0 8px;
+        }
+
+        .study-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 0;
+            color: #756052;
+        }
+
+        body.dark .study-card p {
+            color: var(--beige);
+        }
+
+
+
+        #contact-card {
+            padding: 35px;
+            background: var(--beige);
+            border: 1px solid #D8BEA6;
+            border-radius: 18px;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        body.dark #contact-card {
+            background: var(--card-dark);
+            border-color: #594438;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .contact-form label {
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 13px;
+            color: var(--espresso);
+            background: white;
+            border: 1px solid var(--latte);
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--coffee);
+            box-shadow: 0 0 0 2px rgba(150, 121, 105, 0.25);
+        }
+
+        body.dark .contact-form input,
+        body.dark .contact-form textarea {
+            background: var(--espresso);
+            color: var(--cream);
+            border-color: var(--mocha);
+        }
+
+        .github-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: var(--coffee);
+            font-weight: 700;
+        }
+
+        body.dark .github-link {
+            color: var(--latte);
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 28px 15px;
+            margin-top: 30px;
+            border-top: 1px solid var(--beige);
+            color: var(--mocha);
+            line-height: 1.8;
+        }
+
+        body.dark footer {
+            border-color: var(--mocha);
+            color: var(--latte);
+        }
+
+
+
+        @media (max-width: 850px) {
+            .project-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .tech-chip {
+                right: 2%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #welcome-section {
+                padding: 70px 0;
+            }
+
+            .project-grid,
+            .study-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #contact-card {
+                padding: 22px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .tech-code {
+                left: -15px;
+            }
+
+            .tech-chip {
+                right: -22px;
+            }
+
+            .tech-terminal {
+                left: -15px;
+            }
+
+            .tech-laptop {
+                right: -25px;
+            }
+
+            .tech-chip-svg {
+                left: 5%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 
-<body class="bg-[#08090d] text-white min-h-screen grid-bg selection:bg-primary selection:text-black">
+<body class="dark">
 
-    <!-- NAVIGATION -->
-    <header class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <a href="#home" class="font-black text-xl tracking-tighter">
-           Loraez<span class="text-primary">.web</span>
-        </a>
 
-        <nav class="hidden md:flex gap-8 text-sm text-gray-400">
-            <a href="#home" class="hover:text-primary transition">HOME</a>
-            <a href="#terminal" class="hover:text-primary transition">TERMINAL</a>
-            <a href="#missions" class="hover:text-primary transition">MISSIONS</a>
-            <a href="#about" class="hover:text-primary transition">SYSTEM</a>
+    <div class="tech-background" aria-hidden="true">
+
+        <div class="tech-grid"></div>
+
+
+        <svg class="tech-lines" viewBox="0 0 1200 900" preserveAspectRatio="none">
+            <path d="M0 180 H120 V250 H210 V310 H280" />
+            <path d="M1200 140 H1080 V210 H1000 V290 H930" />
+            <path d="M0 570 H130 V500 H230 V450 H300" />
+            <path d="M1200 600 H1090 V540 H1010 V480 H950" />
+            <path d="M180 900 V810 H270 V750 H350" />
+            <path d="M1020 900 V820 H930 V750 H850" />
+            <path d="M500 0 V80 H570 V130 H640" />
+            <path d="M750 900 V830 H680 V780 H620" />
+
+            <circle cx="120" cy="180" r="4" />
+            <circle cx="210" cy="310" r="4" />
+            <circle cx="1080" cy="140" r="4" />
+            <circle cx="930" cy="290" r="4" />
+            <circle cx="130" cy="570" r="4" />
+            <circle cx="1010" cy="480" r="4" />
+            <circle cx="270" cy="810" r="4" />
+            <circle cx="930" cy="820" r="4" />
+            <circle cx="570" cy="130" r="4" />
+            <circle cx="680" cy="780" r="4" />
+        </svg>
+
+
+        <div class="tech-symbol tech-code">&lt;/&gt;</div>
+
+
+        <div class="tech-symbol tech-chip">▦</div>
+
+
+        <div class="tech-symbol tech-terminal">&gt;_</div>
+
+
+        <div class="tech-symbol tech-circuit">⌘</div>
+
+
+        <div class="tech-laptop">
+            <svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="17" y="10" width="86" height="56" rx="5" />
+                <path d="M8 74 H112 L104 82 H16 Z" />
+                <path d="M43 74 H77" />
+                <path d="M27 22 H57" />
+                <path d="M27 31 H46" />
+                <path d="M27 40 L34 46 L27 52" />
+                <path d="M40 52 H55" />
+                <circle cx="91" cy="22" r="3" />
+            </svg>
+        </div>
+
+
+        <div class="tech-chip-svg">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="18" y="18" width="44" height="44" rx="5" />
+                <rect x="28" y="28" width="24" height="24" rx="3" />
+                <path d="M28 5 V18 M40 5 V18 M52 5 V18" />
+                <path d="M28 62 V75 M40 62 V75 M52 62 V75" />
+                <path d="M5 28 H18 M5 40 H18 M5 52 H18" />
+                <path d="M62 28 H75 M62 40 H75 M62 52 H75" />
+                <path d="M34 40 H46 M40 34 V46" />
+            </svg>
+        </div>
+
+    </div>
+
+
+    <header>
+        <nav class="container">
+            <h1 id="logo" class="logo">
+                Ralph Damiel <span class="accent">Loraez</span>
+            </h1>
+
+            <div class="nav-actions">
+                <button id="toggledark" class="button" type="button">
+                    Toggle Theme
+                </button>
+
+                <button id="replay" class="button" type="button">
+                    ↻ Replay Animation
+                </button>
+            </div>
         </nav>
-
-        <button id="theme-toggle" class="btn-tertiary !px-3 !py-2 text-sm">
-            ☼ LIGHT
-        </button>
     </header>
 
     <main>
-        <!-- HERO -->
-        <section id="home" class="max-w-7xl mx-auto px-6 pt-16 pb-28">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
 
-                <div>
-                    <div class="flex items-center gap-3 mb-8">
-                        <span class="w-2 h-2 rounded-full bg-primary pulse-dot"></span>
-                        <p class="section-label"> 1.0</p>
-                    </div>
 
-                    <p class="text-gray-400 mb-4">WELCOME!</p>
+        <section id="welcome-section" class="container">
 
-                    <h1 class="text-5xl md:text-7xl xl:text-8xl font-black leading-tight tracking-tighter">
-                        ENTER MY
-                        <span class="text-primary glow">Personal</span>
-                        <span class="text-secondary">Space</span>
-                    </h1>
+            <p class="intro-label eyebrow">Welcome to my world</p>
 
-                    <p class="text-gray-400 leading-7 mt-8 max-w-lg">
-                        Not your ordinary portfolio. This is my personal
-                        corner of the internet — a place for experiments,
-                        code, informations, other ways to interact, and things worth creating.
-                    </p>
-
-                    <div class="flex flex-wrap gap-4 mt-8">
-                        <a href="#missions" class="btn-primary">
-                            Explore Missions ↗
-                        </a>
-
-                        <a href="#terminal" class="btn-secondary">
-                            Open Terminal _
-                        </a>
-                    </div>
-
-                    <div class="flex gap-8 mt-12 text-sm">
-                        <div>
-                            <p class="text-primary font-bold text-xl">01</p>
-                            <p class="text-gray-500 mt-1">CREATOR</p>
-                        </div>
-                        <div>
-                            <p class="text-secondary font-bold text-xl">∞</p>
-                            <p class="text-gray-500 mt-1">IDEAS</p>
-                        </div>
-                        <div>
-                            <p class="text-tertiary font-bold text-xl">24/7</p>
-                            <p class="text-gray-500 mt-1">IN LEARNING MODE</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DIGITAL ORB -->
-                <div class="relative flex items-center justify-center min-h-[350px]">
-                    <div class="absolute w-72 h-72 md:w-96 md:h-96 border border-primary/20 rounded-full"></div>
-                    <div class="absolute w-60 h-60 md:w-80 md:h-80 border border-secondary/30 rounded-full"></div>
-                    <div class="absolute w-48 h-48 md:w-64 md:h-64 border border-tertiary/30 rounded-full"></div>
-
-                    <div class="float relative w-48 h-48 md:w-60 md:h-60 rounded-full
-                        bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20
-                        border border-white/10 flex flex-col items-center justify-center
-                        shadow-[0_0_80px_rgba(167,139,250,0.12)]">
-
-                        <span class="text-6xl">⌘</span>
-                        <p class="text-primary font-bold mt-4 tracking-widest">RALPH.EXE</p>
-                        <p class="text-gray-400 text-xs mt-2">DIGITAL ENTITY</p>
-                    </div>
-
-                    <div class="absolute top-8 right-0 glass-card p-4 text-xs">
-                        <p class="text-tertiary">CPU // BRAIN</p>
-                        <p class="text-white mt-2">IDEAS LOADING...</p>
-                    </div>
-
-                    <div class="absolute bottom-8 left-0 glass-card p-4 text-xs">
-                        <p class="text-secondary">STATUS</p>
-                        <p class="text-primary mt-2">BUILDING SOMETHING</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- TERMINAL -->
-        <section id="terminal" class="max-w-5xl mx-auto px-6 py-20">
-            <div class="mb-8">
-                <p class="section-label">01 // INTERACTIVE INTERFACE</p>
-                <h2 class="text-3xl md:text-4xl font-black mt-4">Talk to the terminal<span class="text-primary">.</span></h2>
-                <p class="text-gray-400 mt-3">Type a command. See what happens.</p>
-            </div>
-
-            <div class="glass-card overflow-hidden">
-                <div class="flex items-center justify-between bg-black/30 px-5 py-4 border-b border-white/10">
-                    <div class="flex gap-2">
-                        <span class="w-3 h-3 rounded-full bg-red-400"></span>
-                        <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
-                        <span class="w-3 h-3 rounded-full bg-green-400"></span>
-                    </div>
-                    <span class="text-gray-500 text-xs">ralph@universe:~</span>
-                </div>
-
-                <div class="p-6 md:p-8">
-                    <p class="text-primary text-sm">RALPH OS [Version 1.0.0]</p>
-                    <p class="text-gray-400 text-sm mt-2">Type <span class="text-secondary">help</span> to view available commands.</p>
-
-                    <div id="terminal-output" class="text-sm leading-7 mt-5 min-h-20 text-gray-300">System initialized successfully.
-Awaiting command...</div>
-
-                    <form id="terminal-form" class="flex items-center gap-3 mt-6 border-t border-white/10 pt-5">
-                        <span class="text-primary">&gt;_</span>
-                        <input id="terminal-input" type="text" autocomplete="off"
-                            placeholder="Type help..."
-                            class="bg-transparent outline-none flex-1 min-w-0 text-white placeholder:text-gray-600">
-                        <button class="btn-primary !px-4 !py-2" type="submit">RUN</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- MISSIONS -->
-        <section id="missions" class="max-w-7xl mx-auto px-6 py-20">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10">
-                <div>
-                    <p class="section-label">02 // CURRENT MISSIONS</p>
-                    <h2 class="text-3xl md:text-4xl font-black mt-4">
-                        Things I'm building<span class="text-secondary">.</span>
-                    </h2>
-                </div>
-                <p class="text-gray-400 text-sm max-w-sm leading-6">
-                    Every project is a new level. These are examples you
-                    can replace with your real work.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-5">
-                <article class="glass-card p-7 hover:-translate-y-2 transition duration-300 group">
-                    <div class="flex justify-between items-center mb-10">
-                        <span class="text-primary text-3xl">⌘</span>
-                        <span class="text-xs text-gray-500">MISSION_001</span>
-                    </div>
-                    <p class="text-primary text-xs font-bold tracking-widest">WEB DEVELOPMENT</p>
-                    <h3 class="text-xl font-bold mt-3">The Web Architect</h3>
-                    <p class="text-gray-400 text-sm leading-6 mt-4">
-                        Creating useful digital experiences with HTML,
-                        CSS, JavaScript, and Tailwind CSS.
-                    </p>
-                    <a href="#about" class="inline-block mt-7 text-primary text-sm group-hover:translate-x-2 transition">
-                        Inspect mission →
-                    </a>
-                </article>
-
-                <article class="glass-card p-7 hover:-translate-y-2 transition duration-300 group">
-                    <div class="flex justify-between items-center mb-10">
-                        <span class="text-secondary text-3xl">◈</span>
-                        <span class="text-xs text-gray-500">MISSION_002</span>
-                    </div>
-                    <p class="text-secondary text-xs font-bold tracking-widest">DATABASE SYSTEMS</p>
-                    <h3 class="text-xl font-bold mt-3">The Data Keeper</h3>
-                    <p class="text-gray-400 text-sm leading-6 mt-4">
-                        Designing organized systems, exploring databases,
-                        and turning complicated workflows into simpler ones.
-                    </p>
-                    <a href="#about" class="inline-block mt-7 text-secondary text-sm group-hover:translate-x-2 transition">
-                        Inspect mission →
-                    </a>
-                </article>
-
-                <article class="glass-card p-7 hover:-translate-y-2 transition duration-300 group">
-                    <div class="flex justify-between items-center mb-10">
-                        <span class="text-tertiary text-3xl">⌁</span>
-                        <span class="text-xs text-gray-500">MISSION_003</span>
-                    </div>
-                    <p class="text-tertiary text-xs font-bold tracking-widest">EXPERIMENTAL LAB</p>
-                    <h3 class="text-xl font-bold mt-3">The Idea Hacker</h3>
-                    <p class="text-gray-400 text-sm leading-6 mt-4">
-                        Testing new ideas, learning unfamiliar tools,
-                        and experimenting until something works.
-                    </p>
-                    <a href="#about" class="inline-block mt-7 text-tertiary text-sm group-hover:translate-x-2 transition">
-                        Inspect mission →
-                    </a>
-                </article>
-            </div>
-        </section>
-
-        <!-- ABOUT / SYSTEM -->
-        <section id="about" class="max-w-7xl mx-auto px-6 py-20">
-            <div class="glass-card p-8 md:p-12 grid md:grid-cols-2 gap-10">
-                <div>
-                    <p class="section-label">03 // SYSTEM PROFILE</p>
-                    <h2 class="text-3xl md:text-5xl font-black mt-5 leading-tight">
-                        More than a
-                        <span class="text-primary">username.</span>
-                    </h2>
-                    <p class="text-gray-400 leading-7 mt-6">
-                        I'm Ralph, a student exploring the world of technology
-                        and development. I enjoy learning how digital systems
-                        work and building projects that turn ideas into reality.
-                    </p>
-                    <p class="text-gray-400 leading-7 mt-4">
-                        This website is my digital playground. It's a work in
-                        progress, just like every skill I'm developing.
-                    </p>
-                </div>
-
-                <div class="space-y-6">
-                    <div>
-                        <div class="flex justify-between text-sm mb-3">
-                            <span>HTML / CSS</span>
-                            <span class="text-primary">LEARNING</span>
-                        </div>
-                        <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                            <div class="h-full w-[75%] bg-primary rounded-full"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-sm mb-3">
-                            <span>JAVASCRIPT</span>
-                            <span class="text-secondary">LEARNING</span>
-                        </div>
-                        <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                            <div class="h-full w-[50%] bg-secondary rounded-full"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-sm mb-3">
-                            <span>DATABASE / BACKEND</span>
-                            <span class="text-tertiary">LEARNING</span>
-                        </div>
-                        <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                            <div class="h-full w-[40%] bg-tertiary rounded-full"></div>
-                        </div>
-                    </div>
-
-                    <p class="text-gray-500 text-xs leading-5">
-                        Note: These progress bars are visual placeholders.
-                        Adjust them to reflect your actual skills.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact" class="max-w-4xl mx-auto px-6 py-24 text-center">
-            <p class="section-label">04 // ESTABLISH CONNECTION</p>
-            <h2 class="text-4xl md:text-6xl font-black mt-5">
-                GOT AN IDEA<span class="text-primary">?</span>
+            <h2 id="welcome">
+                My Personal Space<span class="accent">.</span>
             </h2>
-            <p class="text-gray-400 mt-5 leading-7">
-                Have a project, an interesting concept, or just want to talk code?
-                Let's make something worth remembering.
+
+            <p class="username">@loraez-chafio</p>
+
+            <p class="description">
+                Welcome to my portfolio! I am an Information Systems student
+                passionate about website development, system creation, and technology.
+                Here, I share my background, interests, and projects.
             </p>
 
-            <a href="mailto:kudoflynx@gmail.com" class="btn-primary inline-block mt-8">
-                Send a Transmission ↗
+            <a href="#projects" class="button hero-button">
+                Explore My Projects ↘
             </a>
-            <p class="text-gray-500 text-xs mt-4">kudoflynx@gmail.com</p>
+
         </section>
+
+        <section id="projects" class="content-section container">
+
+            <p class="eyebrow">What I've been working on</p>
+
+            <h2 class="section-heading">
+                My Projects<span class="accent">.</span>
+            </h2>
+
+            <p class="section-description">
+                A collection of my background, creativity, and work.
+            </p>
+
+            <div class="project-grid">
+
+
+                <article class="project-card">
+
+                    <div class="project-preview">
+                        <div class="preview-top">
+                            <span>PROJECT / 01</span>
+                            <span>PORTFOLIO</span>
+                        </div>
+
+                        <div class="preview-window">
+                            <strong>MY PORTFOLIO</strong>
+                            <div class="preview-line"></div>
+                            <div class="preview-line short"></div>
+
+                            <div class="preview-blocks">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-info">
+                        <span class="project-category">Web Development</span>
+
+                        <h3>Personal Portfolio</h3>
+
+                        <p>
+                            A personal website introducing my background,
+                            interests, skills, and projects using a clean,
+                            responsive design.
+                        </p>
+
+                        <div class="card-tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <article class="project-card">
+
+                    <div class="project-preview">
+                        <div class="preview-top">
+                            <span>PROFILE / 02</span>
+                            <span>ABOUT ME</span>
+                        </div>
+
+                        <div class="preview-window profile-preview">
+                            <strong class="profile-name">
+                                Ralph Damiel Loraez
+                            </strong>
+
+                            <p class="profile-role">
+                                3rd Year BSIS Student
+                            </p>
+
+                            <div class="preview-line"></div>
+                            <div class="preview-line short"></div>
+                        </div>
+                    </div>
+
+                    <div class="project-info">
+                        <span class="project-category">Personal Profile</span>
+
+                        <h3>My Background</h3>
+
+                        <p>
+                            My journey as an Information Systems student,
+                            my interests in technology, and my goals for
+                            learning and personal growth.
+                        </p>
+
+                        <div class="card-tags">
+                            <span>About Me</span>
+                            <span>Technology</span>
+                            <span>Learning</span>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <article class="project-card">
+
+                    <div class="project-preview">
+                        <div class="preview-top">
+                            <span>LOCATION / 03</span>
+                            <span>NEGROS OCCIDENTAL</span>
+                        </div>
+
+                        <div class="hometown-preview">
+                            <small>MY HOMETOWN</small>
+                            <strong>Victorias City</strong>
+                        </div>
+                    </div>
+
+                    <div class="project-info">
+                        <span class="project-category">My Roots</span>
+
+                        <h3>My Hometown</h3>
+
+                        <p>
+                            A short introduction to Victorias City,
+                            Negros Occidental, Philippines, the place
+                            I call home.
+                        </p>
+
+                        <div class="card-tags">
+                            <span>Victorias City</span>
+                            <span>Negros Occidental</span>
+                        </div>
+                    </div>
+
+                </article>
+
+            </div>
+        </section>
+
+
+        <section id="services" class="content-section container">
+
+            <p class="eyebrow">Always learning</p>
+
+            <h2 class="section-heading">
+                My Studies and Interests<span class="accent">.</span>
+            </h2>
+
+            <p class="section-description">
+                The skills and topics I continue to explore.
+            </p>
+
+            <div class="study-grid">
+
+                <article class="study-card">
+                    <span class="study-number">01 /</span>
+                    <h3>Website Development</h3>
+                    <p>
+                        Designing and building responsive websites using
+                        HTML, CSS, JavaScript, and modern web tools.
+                    </p>
+                </article>
+
+                <article class="study-card">
+                    <span class="study-number">02 /</span>
+                    <h3>Systems Analysis and Design</h3>
+                    <p>
+                        Understanding user requirements, analyzing problems,
+                        and planning practical information system solutions.
+                    </p>
+                </article>
+
+                <article class="study-card">
+                    <span class="study-number">03 /</span>
+                    <h3>Database Management</h3>
+                    <p>
+                        Learning how to organize, store, retrieve,
+                        and manage data using database systems.
+                    </p>
+                </article>
+
+                <article class="study-card">
+                    <span class="study-number">04 /</span>
+                    <h3>Programming and System Creation</h3>
+                    <p>
+                        Developing logical solutions and building applications
+                        that solve real-world problems.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+
+        <section id="contact" class="content-section container">
+
+            <div id="contact-card">
+
+                <p class="eyebrow">Let's connect</p>
+
+                <h2 class="section-heading">
+                    Contact Me<span class="accent">.</span>
+                </h2>
+
+                <p class="section-description">
+                    Have a question or want to connect? Send me a message.
+                </p>
+
+                <form class="contact-form" id="contact-form">
+
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Write your message..."
+                        required></textarea>
+
+                    <button class="button" type="submit">
+                        Send Message ↗
+                    </button>
+
+                    <p id="form-notice" aria-live="polite"></p>
+
+                </form>
+
+                <a class="github-link" href="https://github.com/loraez-chafio" target="_blank"
+                    rel="noopener noreferrer">
+                    Visit My GitHub ↗
+                </a>
+
+            </div>
+        </section>
+
     </main>
 
-    <footer class="border-t border-white/10 px-6 py-8">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 justify-between text-xs text-gray-500">
-            <p>© <span id="year"></span> Loraez.web // ALL INFORMATION IS EITHER TRUE OR CAP</p>
-            <p>DESIGNED IN THE DIGITAL VOID <span class="text-primary">●</span></p>
-        </div>
+
+    <footer>
+        <p>© 2026 Ralph Damiel Loraez</p>
+        <p>Made with passion and a little coffee.</p>
     </footer>
 
+
     <script>
-        // AUTOMATIC CURRENT YEAR
-        document.getElementById("year").textContent = new Date().getFullYear();
+        const body = document.body;
+        const themeButton = document.getElementById("toggledark");
+        const replayButton = document.getElementById("replay");
 
-        // DARK / LIGHT MODE
-        const themeToggle = document.getElementById("theme-toggle");
-
-        themeToggle.addEventListener("click", () => {
-            document.documentElement.classList.toggle("dark");
-            document.body.classList.toggle("light-mode");
-
-            themeToggle.textContent =
-                document.body.classList.contains("light-mode")
-                    ? "☾ DARK"
-                    : "☼ LIGHT";
-        });
-
-        // INTERACTIVE TERMINAL
-        const terminalForm = document.getElementById("terminal-form");
-        const terminalInput = document.getElementById("terminal-input");
-        const terminalOutput = document.getElementById("terminal-output");
-
-        
-const commands = {
-    help: `AVAILABLE COMMANDS:
-help         - Show all commands
-whoami       - Display identity
-skills       - View learning areas
-missions     - View current projects
-achievements - View achievement categories
-
-clear        - Clear terminal
-secret       - Discover a little surprise`,
-
-    whoami: `Hello, 'IM  Ralph Damiel Loraez, a 3rd year Information Systems in Colegio de Sta. Ana de Victorias. I am passionate about technology, coding, and continuous learning. I enjoy exploring new ideas, building projects, and improving my skills in web development and database systems.
-ROLE: Student / Aspiring Developer
-STATUS: Learning, building, improving.`,
-
-    skills: `
-> HTML & CSS
-> JavaScript
-> Tailwind CSS
-> Databases and backend development`,
-
-    missions: `ACTIVE MISSIONS:
-[01]  To Get a Diploma
-[02]  To be a better person
-[03]  To be a professional
-[04]  To have a beautiful wife and kids, and have a house with a porch that faces the river as the sun sets.
-
-Scroll to the MISSIONS section to explore.`,
-
-    achievements: `
-
-ACADEMICS
- 
-ESPORTS
-   
-SPORTS
-   
-
-`,
-
-    academics: `===== ACADEMIC ACHIEVEMENTS =====
-
-> Academic awards: [2013-2014 Class Top 3, 2014-2015 Top 2, 2015-2016 Top 2, 2016-2017 Class Salutatorian, 2017-2018 With Honors, 2022-2023 With High Honors]
-> Academic competitions: [MTAP, Quiz Bee, Science Fair]
-
-
-
-`,
-
-    esports: `
-
-> Main game: [Mobile Legends: Bang Bang]
-> Team / Organization: [12 - HUMSS 3 Representative, SK Tournament Hda. La Consolacion Representative, DOCS Department Representative CWEEEK ML TOURNAMENT, DOCS FINEST]
-> Achievements: [2026 CWEEK ML TOURNAMENT - CHAMPION, 2025 BMIT ML TOURNAMENT - CHAMPION. 2024 BMIT ML TOURNAMENT - CHAMPION, 2023 CSS ML TOURNAMENT -  Top 4, BRGY XII Sk ML Tournament Top 3,]
-
-
-`,
-
-    sports: `===== SPORTS ACHIEVEMENTS =====
-
-> Sport: [Basketball, Badminton]
-> Team / Club: [Purok 1 - 2021 U18 LEAGUE, Purok 1 - 2022 U18 LEAGUE, Red Dragons - Inter Color Christmas League, The Common - 2024 Inter Purok Open League,  Hoopers - 2026 Opya Basketball League, 2026 Inter Purok Basketball League, 2015-2016 & 2016-2017 La Consolacion Badminton (Solo) Representative]
-> Achievements: [ 2024 Inter Purok Open League - CHAMPION, 2021 U18 LEAGUE - 2nd Place, 2022 U18 LEAGUE 2nd Place, 2022 Inter Color Christmas League - Champion,  2015-2016 & 2016-2017 La Consolacion Badminton (Solo) Representative - 2nd Place]
-`,
-
-    secret: `
-
-“One day, you’ll look back at the moments when you almost gave up and realize they were the moments that taught you how strong you really are. Let them doubt you. Let yourself feel lost sometimes. You don’t have to prove your worth to anyone, and you don’t have to have everything figured out today. Even if you’re moving slowly, even if nobody believes in you yet, keep going. You are still becoming the person you’ve always dreamed of being. Don’t let the voice that says you can’t become louder than the heart that still wants to try.”`,
-
-    clear: ""
-};
-
-
-        terminalForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            const command = terminalInput.value.trim().toLowerCase();
-
-            if (!command) return;
-
-            if (command === "clear") {
-                terminalOutput.textContent = "";
-            } else if (commands[command]) {
-                terminalOutput.textContent = "> " + command + "\n\n" + commands[command];
-            } else {
-                terminalOutput.textContent =
-                    "> " + command +
-                    "\n\nCommand not found. Type 'help' to see available commands.";
+        function playAnimation() {
+            if (window.portfolioTimeline) {
+                window.portfolioTimeline.kill();
             }
 
-            terminalInput.value = "";
+            const animatedElements = [
+                "#logo",
+                "#toggledark",
+                "#replay",
+                "#welcome-section .intro-label",
+                "#welcome",
+                "#welcome-section .username",
+                "#welcome-section .description",
+                "#welcome-section .hero-button",
+                "#projects .eyebrow",
+                "#projects .section-heading",
+                "#projects .section-description",
+                ".project-card",
+                "#services .eyebrow",
+                "#services .section-heading",
+                "#services .section-description",
+                ".study-card",
+                "#contact-card"
+            ];
+
+            gsap.set(animatedElements, {
+                clearProps: "all",
+                autoAlpha: 1
+            });
+
+            const timeline = gsap.timeline({
+                defaults: {
+                    ease: "power2.out",
+                    duration: 0.45
+                }
+            });
+
+            timeline
+                .from("#logo", { y: -15, autoAlpha: 0 })
+                .from("#toggledark, #replay", { y: -10, autoAlpha: 0, stagger: 0.1 }, "-=0.2")
+                .from("#welcome-section .intro-label", { y: 10, autoAlpha: 0 }, "-=0.1")
+                .from("#welcome", { y: 20, autoAlpha: 0 }, "-=0.1")
+                .from("#welcome-section .username", { y: 10, autoAlpha: 0 }, "-=0.15")
+                .from("#welcome-section .description", { y: 10, autoAlpha: 0 }, "-=0.15")
+                .from("#welcome-section .hero-button", { y: 10, autoAlpha: 0 }, "-=0.15")
+                .from("#projects .eyebrow, #projects .section-heading, #projects .section-description", { y: 12, autoAlpha: 0, stagger: 0.1 }, "-=0.1")
+                .from(".project-card", { y: 35, scale: 0.96, autoAlpha: 0, stagger: 0.15, duration: 0.55 }, "-=0.05")
+                .from("#services .eyebrow, #services .section-heading, #services .section-description", { y: 12, autoAlpha: 0, stagger: 0.1 }, "-=0.05")
+                .from(".study-card", { y: 25, autoAlpha: 0, stagger: 0.12, duration: 0.5 }, "-=0.05")
+                .from("#contact-card", { y: 20, autoAlpha: 0, duration: 0.5 }, "-=0.05");
+
+            window.portfolioTimeline = timeline;
+            return timeline;
+        }
+
+        window.addEventListener("load", function () {
+            if (typeof gsap !== "undefined") {
+                playAnimation();
+            } else {
+                console.error("GSAP did not load. The page will still display.");
+            }
+        });
+
+
+        themeButton.addEventListener("click", function () {
+            body.classList.toggle("dark");
+
+            if (typeof gsap !== "undefined") {
+                gsap.fromTo(
+                    themeButton,
+                    { rotation: 0 },
+                    {
+                        rotation: 360,
+                        duration: 0.5,
+                        ease: "power2.inOut",
+                        onComplete: function () {
+                            gsap.set(themeButton, { rotation: 0 });
+                        }
+                    }
+                );
+            }
+        });
+
+        replayButton.addEventListener("click", function () {
+            if (typeof gsap !== "undefined") {
+                playAnimation();
+            }
+        });
+
+
+        document.getElementById("contact-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            document.getElementById("form-notice").textContent =
+                "The form is working, but sending messages requires a backend or form service.";
         });
     </script>
 
 </body>
+
 </html>
